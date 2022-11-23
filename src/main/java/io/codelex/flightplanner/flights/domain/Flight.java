@@ -1,5 +1,6 @@
 package io.codelex.flightplanner.flights.domain;
 
+import io.codelex.flightplanner.flights.dto.FlightRequest;
 import io.codelex.flightplanner.flights.response.NullException;
 import io.codelex.flightplanner.flights.response.SameFromToException;
 import io.codelex.flightplanner.flights.response.TimeException;
@@ -73,7 +74,7 @@ public class Flight {
         this.arrivalTime = arrivalTime;
     }
 
-    public boolean checkValidity() throws NullException, TimeException, ParseException, SameFromToException {
+    public boolean checkValidity() throws ParseException {
 
         if (from == null || to == null || carrier == null || carrier.equals("") || arrivalTime == null ||
                 departureTime == null || from.seeIfNull() || to.seeIfNull()) {

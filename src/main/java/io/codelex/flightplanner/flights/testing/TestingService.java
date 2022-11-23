@@ -1,3 +1,4 @@
+/*
 package io.codelex.flightplanner.flights.testing;
 
 import org.springframework.stereotype.Service;
@@ -15,3 +16,4 @@ public class TestingService {
         testingRepository.clearFlights();
     }
 }
+*/

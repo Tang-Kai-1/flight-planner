@@ -1,11 +1,12 @@
+/*
 package io.codelex.flightplanner.flights.customer;
 
 import io.codelex.flightplanner.FlightPlannerApplication;
 import io.codelex.flightplanner.flights.domain.*;
+import io.codelex.flightplanner.flights.dto.PageResult;
+import io.codelex.flightplanner.flights.dto.SearchFlightRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-
-import java.text.ParseException;
 
 @Repository
 public class CustomerRepository {
@@ -27,3 +28,4 @@ public class CustomerRepository {
         return repository.findFlightById(id);
     }
 }
+*/

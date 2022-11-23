@@ -1,8 +1,9 @@
+/*
 package io.codelex.flightplanner.flights.admin;
 
 import io.codelex.flightplanner.FlightPlannerApplication;
 import io.codelex.flightplanner.flights.domain.Flight;
-import io.codelex.flightplanner.flights.domain.FlightRequest;
+import io.codelex.flightplanner.flights.dto.FlightRequest;
 import io.codelex.flightplanner.flights.domain.Flights;
 import io.codelex.flightplanner.flights.response.NullException;
 import io.codelex.flightplanner.flights.response.SameFromToException;
@@ -40,3 +41,4 @@ public class AdminRepository {
         return flightList.deleteFlight(id);
     }
 }
+*/

@@ -1,4 +1,4 @@
-package io.codelex.flightplanner.flights.testing;
+package io.codelex.flightplanner.flights;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/testing-api", method = {RequestMethod.PUT})
 public class TestingController {
 
-    private TestingService testingService;
+    private FlightService service;
 
-    public TestingController(TestingService testingService) {
-        this.testingService = testingService;
+    public TestingController(FlightService testingService) {
+        this.service = testingService;
     }
 
     @PostMapping("/clear")
     @ResponseStatus(HttpStatus.OK)
     public void clearFlights() {
-        testingService.clearFlights();
+        service.clearFlights();
     }
 }

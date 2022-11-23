@@ -1,6 +1,8 @@
-package io.codelex.flightplanner.flights.customer;
+package io.codelex.flightplanner.flights;
 
 import io.codelex.flightplanner.flights.domain.*;
+import io.codelex.flightplanner.flights.dto.PageResult;
+import io.codelex.flightplanner.flights.dto.SearchFlightRequest;
 import io.codelex.flightplanner.flights.response.NullException;
 import io.codelex.flightplanner.flights.response.SameFromToException;
 import org.springframework.http.ResponseEntity;
@@ -9,24 +11,24 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class CustomerController {
-    private CustomerService customerService;
+    private FlightService service;
 
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    public CustomerController(FlightService customerService) {
+        this.service = customerService;
     }
 
     @GetMapping("/airports")
     public ResponseEntity<Airport[]> searchAirports(@RequestParam String search) {
-        return customerService.searchAirports(search);
+        return service.searchAirports(search);
     }
 
     @PostMapping("/flights/search")
-    public ResponseEntity<PageResult<Flight>> searchFlights(@RequestBody SearchFlightRequest searchFlightRequest) throws NullException, SameFromToException {
-        return customerService.searchFlights(searchFlightRequest);
+    public ResponseEntity<PageResult<Flight>> searchFlights(@RequestBody SearchFlightRequest searchFlightRequest) {
+        return service.searchFlights(searchFlightRequest);
     }
 
     @GetMapping("/flights/{id}")
     public ResponseEntity<Flight> findFlightById(@PathVariable("id") int id) {
-        return customerService.findFlightById(id);
+        return service.fetchFlight(id);
     }
 }

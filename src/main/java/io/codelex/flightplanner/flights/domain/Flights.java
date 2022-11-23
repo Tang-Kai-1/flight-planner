@@ -1,6 +1,9 @@
+/*
 package io.codelex.flightplanner.flights.domain;
 
 
+import io.codelex.flightplanner.flights.dto.PageResult;
+import io.codelex.flightplanner.flights.dto.SearchFlightRequest;
 import io.codelex.flightplanner.flights.response.NullException;
 import io.codelex.flightplanner.flights.response.SameFromToException;
 import io.codelex.flightplanner.flights.response.TimeException;
@@ -106,3 +109,4 @@ public class Flights {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }
+*/

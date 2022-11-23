@@ -1,3 +1,4 @@
+/*
 package io.codelex.flightplanner.flights.testing;
 
 import io.codelex.flightplanner.FlightPlannerApplication;
@@ -12,3 +13,4 @@ public class TestingRepository {
         flights.clear();
     }
 }
+*/
