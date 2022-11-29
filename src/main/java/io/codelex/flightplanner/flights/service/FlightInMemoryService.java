@@ -1,5 +1,6 @@
-package io.codelex.flightplanner.flights;
+package io.codelex.flightplanner.flights.service;
 
+import io.codelex.flightplanner.flights.repository.FlightInMemoryRepository;
 import io.codelex.flightplanner.flights.domain.*;
 import io.codelex.flightplanner.flights.dto.FlightRequest;
 import io.codelex.flightplanner.flights.dto.PageResult;

@@ -15,25 +15,21 @@ import java.util.Date;
 
 @Entity
 public class Flight {
-    //@NotNull
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "AIRPORT_FROM", referencedColumnName = "airport")
     private Airport from;
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name = "AIRPORT_TO", referencedColumnName = "airport")
     private Airport to;
-    //@NotNull
     @Column(name="CARRIER", nullable=false, unique=true)
     private String carrier;
-    //@NotNull
     @Column(name="DEPARTURE_TIME", nullable=false, unique=true)
     private String departureTime;
-    //@NotNull
     @Column(name="ARRIVAL_TIME", nullable=false, unique=true)
     private String arrivalTime;
 
@@ -42,16 +38,16 @@ public class Flight {
         this.from = flightRequest.getFrom();
         this.to = flightRequest.getTo();
         this.carrier = flightRequest.getCarrier();
-        this.departureTime = flightRequest.getDepartureTime();//new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(flightRequest.getDepartureTime());
-        this.arrivalTime = flightRequest.getArrivalTime();//new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(flightRequest.getArrivalTime());
+        this.departureTime = flightRequest.getDepartureTime();
+        this.arrivalTime = flightRequest.getArrivalTime();
     }
 
     public Flight(FlightRequest flightRequest) {
         this.from = flightRequest.getFrom();
         this.to = flightRequest.getTo();
         this.carrier = flightRequest.getCarrier();
-        this.departureTime = flightRequest.getDepartureTime();//new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(flightRequest.getDepartureTime());
-        this.arrivalTime = flightRequest.getArrivalTime();//new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(flightRequest.getArrivalTime());
+        this.departureTime = flightRequest.getDepartureTime();
+        this.arrivalTime = flightRequest.getArrivalTime();
     }
 
     public Flight() {

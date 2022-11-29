@@ -1,5 +1,6 @@
-package io.codelex.flightplanner.flights;
+package io.codelex.flightplanner.flights.controller;
 
+import io.codelex.flightplanner.flights.service.FlightService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

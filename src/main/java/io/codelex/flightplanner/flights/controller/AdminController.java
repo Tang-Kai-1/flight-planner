@@ -1,7 +1,8 @@
-package io.codelex.flightplanner.flights;
+package io.codelex.flightplanner.flights.controller;
 
 import io.codelex.flightplanner.flights.domain.Flight;
 import io.codelex.flightplanner.flights.dto.FlightRequest;
+import io.codelex.flightplanner.flights.service.FlightService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

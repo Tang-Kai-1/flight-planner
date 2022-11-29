@@ -9,11 +9,11 @@ import java.util.Objects;
 
 @Entity
 public class Airport {
-    @Column(name="COUNTRY", nullable=false, unique=true)
+    @NotNull
     private String country;
-    @Column(name="CITY", nullable=false, unique=true)
+    @NotNull
     private String city;
-    @Column(name="AIRPORT", nullable=false, unique=true)
+    @NotNull
     @Id
     private String airport;
 

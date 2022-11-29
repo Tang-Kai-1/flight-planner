@@ -1,10 +1,9 @@
-package io.codelex.flightplanner.flights;
+package io.codelex.flightplanner.flights.controller;
 
 import io.codelex.flightplanner.flights.domain.*;
 import io.codelex.flightplanner.flights.dto.PageResult;
 import io.codelex.flightplanner.flights.dto.SearchFlightRequest;
-import io.codelex.flightplanner.flights.response.NullException;
-import io.codelex.flightplanner.flights.response.SameFromToException;
+import io.codelex.flightplanner.flights.service.FlightService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
