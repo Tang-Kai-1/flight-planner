@@ -1,20 +1,40 @@
 package io.codelex.flightplanner.flights.domain;
 
+import com.sun.istack.NotNull;
 import io.codelex.flightplanner.flights.dto.FlightRequest;
 import io.codelex.flightplanner.flights.response.NullException;
 import io.codelex.flightplanner.flights.response.SameFromToException;
 import io.codelex.flightplanner.flights.response.TimeException;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
+import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Entity
 public class Flight {
+    //@NotNull
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
+    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "AIRPORT_FROM", referencedColumnName = "airport")
     private Airport from;
+    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "AIRPORT_TO", referencedColumnName = "airport")
     private Airport to;
+    //@NotNull
+    @Column(name="CARRIER", nullable=false, unique=true)
     private String carrier;
+    //@NotNull
+    @Column(name="DEPARTURE_TIME", nullable=false, unique=true)
     private String departureTime;
+    //@NotNull
+    @Column(name="ARRIVAL_TIME", nullable=false, unique=true)
     private String arrivalTime;
 
     public Flight(int id, FlightRequest flightRequest) {
@@ -24,6 +44,18 @@ public class Flight {
         this.carrier = flightRequest.getCarrier();
         this.departureTime = flightRequest.getDepartureTime();//new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(flightRequest.getDepartureTime());
         this.arrivalTime = flightRequest.getArrivalTime();//new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(flightRequest.getArrivalTime());
+    }
+
+    public Flight(FlightRequest flightRequest) {
+        this.from = flightRequest.getFrom();
+        this.to = flightRequest.getTo();
+        this.carrier = flightRequest.getCarrier();
+        this.departureTime = flightRequest.getDepartureTime();//new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(flightRequest.getDepartureTime());
+        this.arrivalTime = flightRequest.getArrivalTime();//new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(flightRequest.getArrivalTime());
+    }
+
+    public Flight() {
+
     }
 
     public int getId() {

@@ -20,8 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @ConditionalOnProperty(prefix = "myapp", name = "appmode", havingValue = "inmemory")
 public class FlightInMemoryService implements FlightService {
 
-    private FlightInMemoryRepository repository;
-    //private FlightRepository repository   --nestrādāja, jo nespēja autowierot 
+    //private FlightInMemoryRepository repository;
+    private FlightInMemoryRepository repository;   //--nestrādāja, jo nespēja autowierot
     public FlightInMemoryService(FlightInMemoryRepository repository) {
         this.repository = repository;
     }
@@ -68,23 +68,7 @@ public class FlightInMemoryService implements FlightService {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(airport, HttpStatus.OK);
-        /*
-        for (Flight flight : repository.getAllFlights()) {
-            Airport airportFrom = flight.getFrom();
-            Airport airportTo = flight.getTo();
-            if (airportFrom.getCity().toLowerCase().startsWith(search.toLowerCase().trim()) ||
-                    airportFrom.getCountry().toLowerCase().startsWith(search.toLowerCase().trim()) ||
-                    airportFrom.getAirport().toLowerCase().startsWith(search.toLowerCase().trim())) {
-                return new ResponseEntity<>(new Airport[]{airportFrom}, HttpStatus.OK);
-            }
-            if (airportTo.getCity().toLowerCase().startsWith(search.toLowerCase().trim()) ||
-                    airportTo.getCountry().toLowerCase().startsWith(search.toLowerCase().trim()) ||
-                    airportTo.getAirport().toLowerCase().startsWith(search.toLowerCase().trim())) {
-                return new ResponseEntity<>(new Airport[]{airportTo}, HttpStatus.OK);
-            }
-        }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        */
+
     }
 
     @Override

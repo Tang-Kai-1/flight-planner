@@ -1,16 +1,30 @@
 package io.codelex.flightplanner.flights.domain;
 
+import com.sun.istack.NotNull;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class Airport {
+    @Column(name="COUNTRY", nullable=false, unique=true)
     private String country;
+    @Column(name="CITY", nullable=false, unique=true)
     private String city;
+    @Column(name="AIRPORT", nullable=false, unique=true)
+    @Id
     private String airport;
 
     public Airport(String country, String city, String airport) {
         this.country = country;
         this.city = city;
         this.airport = airport;
+    }
+
+    public Airport() {
+
     }
 
     public String getCountry() {
@@ -49,7 +63,7 @@ public class Airport {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Airport airport1 = (Airport) o;
-        return country.equals(airport1.country) && city.equals(airport1.city) && airport.equals(airport1.airport);
+        return country.equalsIgnoreCase(airport1.country) && city.equalsIgnoreCase(airport1.city) && airport.equalsIgnoreCase(airport1.airport);
     }
 
     @Override

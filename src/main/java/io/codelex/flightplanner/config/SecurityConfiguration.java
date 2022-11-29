@@ -17,7 +17,7 @@ public class SecurityConfiguration {
                 .anyRequest().authenticated() //everything else with authentication
                 .and()
                 .httpBasic(); //authentication type
-
+        http.headers().frameOptions().disable();
         return http.build();
     }
 

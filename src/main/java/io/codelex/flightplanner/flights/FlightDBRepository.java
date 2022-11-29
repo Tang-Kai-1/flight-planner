@@ -1,3 +1,4 @@
+/*
 package io.codelex.flightplanner.flights;
 
 import io.codelex.flightplanner.flights.domain.Flight;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-//@ConditionalOnProperty(prefix = "myapp", name = "data", havingValue = "inmemory")
+@ConditionalOnProperty(prefix = "myapp", name = "data", havingValue = "db")
 public class FlightDBRepository implements FlightRepository {
     @Override
     public List<Flight> getAllFlights() {
@@ -37,3 +38,4 @@ public class FlightDBRepository implements FlightRepository {
         return null;
     }
 }
+*/

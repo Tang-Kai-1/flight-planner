@@ -3,7 +3,6 @@ package io.codelex.flightplanner.flights;
 import io.codelex.flightplanner.flights.domain.Flight;
 import io.codelex.flightplanner.flights.dto.PageResult;
 import io.codelex.flightplanner.flights.dto.SearchFlightRequest;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -14,19 +13,17 @@ import java.util.List;
 
 @Repository
 //@ConditionalOnProperty(prefix = "myapp", name = "data", havingValue = "inmemory")
-public class FlightInMemoryRepository implements FlightRepository {
+public class FlightInMemoryRepository {
     private List<Flight> flights = new ArrayList<>();
 
     public List<Flight> getAllFlights() {
         return flights;
     }
 
-    @Override
     public void clearFlights() {
         flights.clear();
     }
 
-    @Override
     public ResponseEntity<Flight> addFlight(Flight flight) throws ParseException {
         if (flight.checkValidity()) {
             if (checkUnique(flight)) {
@@ -39,13 +36,11 @@ public class FlightInMemoryRepository implements FlightRepository {
         }
     }
 
-    @Override
     public ResponseEntity<Flight> deleteFlight(int id) {
         flights.removeIf(f -> f.getId() == id);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    @Override
     public ResponseEntity<PageResult<Flight>> searchFlights(SearchFlightRequest searchFlightRequest) {
         PageResult pageResult = new PageResult();
         for (Flight flight : flights) {
