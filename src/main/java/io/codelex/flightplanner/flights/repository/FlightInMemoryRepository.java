@@ -25,15 +25,11 @@ public class FlightInMemoryRepository {
     }
 
     public ResponseEntity<Flight> addFlight(Flight flight) throws ParseException {
-        if (flight.checkValidity()) {
-            if (checkUnique(flight)) {
-                flights.add(flight);
-                return new ResponseEntity<>(flight, HttpStatus.CREATED);
-            }
-            return new ResponseEntity<>(flight, HttpStatus.CONFLICT);
-        } else {
-            return new ResponseEntity<>(flight, HttpStatus.BAD_REQUEST);
+        if (checkUnique(flight)) {
+            flights.add(flight);
+            return new ResponseEntity<>(flight, HttpStatus.CREATED);
         }
+        return new ResponseEntity<>(flight, HttpStatus.CONFLICT);
     }
 
     public ResponseEntity<Flight> deleteFlight(int id) {
@@ -46,8 +42,9 @@ public class FlightInMemoryRepository {
         for (Flight flight : flights) {
             if (searchFlightRequest.getFrom().equalsIgnoreCase(flight.getFrom().getAirport()) &&
                     searchFlightRequest.getTo().equalsIgnoreCase(flight.getTo().getAirport()) &&
-                    flight.getDepartureTime().startsWith(searchFlightRequest.getDepartureTime())
-            ) {
+                    flight.getDepartureTime().getYear() == searchFlightRequest.getDepartureTime().getYear() &&
+                    flight.getDepartureTime().getMonth() == searchFlightRequest.getDepartureTime().getMonth() &&
+                    flight.getDepartureTime().getDayOfMonth() == searchFlightRequest.getDepartureTime().getDayOfMonth()) {
                 pageResult.addItem(flight);
             }
         }

@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import java.text.ParseException;
 
 @Service
@@ -28,8 +29,8 @@ public class FlightDBService implements FlightService {
 
     @Override
     public ResponseEntity<Flight> addFlight(FlightRequest flightRequest) throws ParseException {
-        Flight flight = new Flight(flightRequest);
-        if (flight.checkValidity()) {
+        if (flightRequest.checkValidity()) {
+            Flight flight = new Flight(flightRequest);
             if (checkUnique(flight)) {
                 flight.setFrom(findOrCreate(flight.getFrom()));
                 flight.setTo(findOrCreate(flight.getTo()));
@@ -38,7 +39,7 @@ public class FlightDBService implements FlightService {
             }
             return new ResponseEntity<>(flight, HttpStatus.CONFLICT);
         } else {
-            return new ResponseEntity<>(flight, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -120,7 +121,9 @@ public class FlightDBService implements FlightService {
         for (Flight flight : flightRepository.findAll()) {
             if (searchFlightRequest.getFrom().equalsIgnoreCase(flight.getFrom().getAirport()) &&
                     searchFlightRequest.getTo().equalsIgnoreCase(flight.getTo().getAirport()) &&
-                    flight.getDepartureTime().startsWith(searchFlightRequest.getDepartureTime())
+                    flight.getDepartureTime().getYear() == searchFlightRequest.getDepartureTime().getYear() &&
+                    flight.getDepartureTime().getMonth() == searchFlightRequest.getDepartureTime().getMonth() &&
+                    flight.getDepartureTime().getDayOfMonth() == searchFlightRequest.getDepartureTime().getDayOfMonth()
             ) {
                 pageResult.addItem(flight);
             }

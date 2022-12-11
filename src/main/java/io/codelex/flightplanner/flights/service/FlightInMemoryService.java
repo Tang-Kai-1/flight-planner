@@ -23,6 +23,7 @@ public class FlightInMemoryService implements FlightService {
 
     //private FlightInMemoryRepository repository;
     private FlightInMemoryRepository repository;   //--nestrādāja, jo nespēja autowierot
+
     public FlightInMemoryService(FlightInMemoryRepository repository) {
         this.repository = repository;
     }
@@ -31,11 +32,15 @@ public class FlightInMemoryService implements FlightService {
 
     @Override
     public ResponseEntity<Flight> addFlight(FlightRequest flightRequest) throws ParseException {
-        ResponseEntity<Flight> response = repository.addFlight(new Flight(id.intValue(), flightRequest));
-        if (response.getStatusCode().is2xxSuccessful()) {
-            id.incrementAndGet();
+        if (flightRequest.checkValidity()) {
+            ResponseEntity<Flight> response = repository.addFlight(new Flight(id.intValue(), flightRequest));
+            if (response.getStatusCode().is2xxSuccessful()) {
+                id.incrementAndGet();
+            }
+            return response;
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        return response;
     }
 
     @Override

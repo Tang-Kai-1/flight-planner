@@ -20,6 +20,11 @@ public class AdminController {
 
     @PutMapping("/flights")
     public ResponseEntity<Flight> addFlight(@RequestBody FlightRequest flightRequest) throws ParseException {
+        System.out.println("Received flight request");
+        System.out.println("Departure:");
+        System.out.println(flightRequest.getDepartureTime());
+        System.out.println("Arrival:");
+        System.out.println(flightRequest.getArrivalTime());
         return service.addFlight(flightRequest);
     }
 

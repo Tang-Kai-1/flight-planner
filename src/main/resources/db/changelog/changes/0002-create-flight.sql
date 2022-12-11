@@ -8,8 +8,8 @@ CREATE TABLE flight
     airport_from   VARCHAR(255) NOT NULL,
     airport_to     VARCHAR(255) NOT NULL,
     carrier        VARCHAR(255) NOT NULL,
-    departure_time VARCHAR(255) NOT NULL,
-    arrival_time   VARCHAR(255) NOT NULL,
+    departure_time TIMESTAMP NOT NULL,
+    arrival_time   TIMESTAMP NOT NULL,
     FOREIGN KEY (airport_from) REFERENCES airport (airport) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (airport_to) REFERENCES airport (airport) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (id)

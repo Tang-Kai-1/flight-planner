@@ -1,20 +1,23 @@
 package io.codelex.flightplanner.flights.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import io.codelex.flightplanner.flights.dto.FlightRequest;
 import io.codelex.flightplanner.flights.response.NullException;
 import io.codelex.flightplanner.flights.response.SameFromToException;
 import io.codelex.flightplanner.flights.response.TimeException;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Flight {
+
+    @Transient
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
@@ -28,26 +31,30 @@ public class Flight {
     private Airport to;
     @Column(name="CARRIER", nullable=false, unique=true)
     private String carrier;
-    @Column(name="DEPARTURE_TIME", nullable=false, unique=true)
-    private String departureTime;
-    @Column(name="ARRIVAL_TIME", nullable=false, unique=true)
-    private String arrivalTime;
+    @Column(name="DEPARTURE_TIME", nullable=false, unique=true, columnDefinition = "TIMESTAMP")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    //@Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime departureTime;
+    @Column(name="ARRIVAL_TIME", nullable=false, unique=true, columnDefinition = "TIMESTAMP")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    //@Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime arrivalTime;
 
     public Flight(int id, FlightRequest flightRequest) {
         this.id = id;
         this.from = flightRequest.getFrom();
         this.to = flightRequest.getTo();
         this.carrier = flightRequest.getCarrier();
-        this.departureTime = flightRequest.getDepartureTime();
-        this.arrivalTime = flightRequest.getArrivalTime();
+        this.departureTime = LocalDateTime.parse(flightRequest.getDepartureTime(),formatter);
+        this.arrivalTime = LocalDateTime.parse(flightRequest.getArrivalTime(),formatter);
     }
 
     public Flight(FlightRequest flightRequest) {
         this.from = flightRequest.getFrom();
         this.to = flightRequest.getTo();
         this.carrier = flightRequest.getCarrier();
-        this.departureTime = flightRequest.getDepartureTime();
-        this.arrivalTime = flightRequest.getArrivalTime();
+        this.departureTime = LocalDateTime.parse(flightRequest.getDepartureTime(),formatter);
+        this.arrivalTime = LocalDateTime.parse(flightRequest.getArrivalTime(),formatter);
     }
 
     public Flight() {
@@ -86,37 +93,19 @@ public class Flight {
         this.carrier = carrier;
     }
 
-    public String getDepartureTime() {
+    public LocalDateTime getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(String departureTime) {
+    public void setDepartureTime(LocalDateTime departureTime) {
         this.departureTime = departureTime;
     }
 
-    public String getArrivalTime() {
+    public LocalDateTime getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(String arrivalTime) {
+    public void setArrivalTime(LocalDateTime arrivalTime) {
         this.arrivalTime = arrivalTime;
-    }
-
-    public boolean checkValidity() throws ParseException {
-
-        if (from == null || to == null || carrier == null || carrier.equals("") || arrivalTime == null ||
-                departureTime == null || from.seeIfNull() || to.seeIfNull()) {
-            throw new NullException("Cannot contain null or empty values!");
-        }
-        if (from.getAirport().trim().equalsIgnoreCase(to.getAirport().trim())) {
-            throw new SameFromToException("Destination and departure point match");
-        }
-
-        Date arrival = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(arrivalTime);
-        Date departure = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(departureTime);
-        if (departure.after(arrival) || arrival.compareTo(departure) == 0) {
-            throw new TimeException("You cannot get there earlier than you departure. Teleportation also doesn't work!");
-        }
-        return true;
     }
 }
